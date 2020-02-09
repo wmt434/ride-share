@@ -1,0 +1,83 @@
+{% extends "goride/base.html" %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% block content %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+
+
+<h3>Go Share</h3>
+      <form method="GET" action=".">
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <label>Your Destination</label>
+                    <br />
+                    <input class="form-control py-2 border-right-0 border" type="search" name="dest" />
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <label>Earliest Arrival Time <br /> </label>
+                    <br />
+                    <input class="form-control py-2 border-right-0 border", type="datetime-local", name="earliest_arrival" />
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <label>Latest Arrival Time</label>
+                    <br />
+                    <input class="form-control py-2 border-right-0 border", type="datetime-local", name="latest_arrival" />
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+
+<br />
+  {% for ride in rides %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'join' ride.pk %}">Join</a>
+          <small class="text-muted">{{ ride.start_time }}</small>
+        </div>
+        <div class="container">
+          <div class="row">
+                    <br />
+            <div class="col-sm">
+               <br />
+              <p class="large"> To &nbsp&nbsp{{ ride.destination }}</p>
+            </div>
+            <div class="col-sm">
+               <br />
+              <p class="large"> {{ ride.required_arrival }}</p>
+            </div>
+          </div>
+        </div>
+        <br />
+        <p class="article-content"><b>status:&nbsp{{ ride.get_status_display }}</b></p>
+      </div>
+    </article>
+  {% endfor %}
+{% endblock content %}

@@ -1,0 +1,56 @@
+
+---------------- Here are danger logs for our project ----------------
+
+2.2	
+
+1.  Email field is not necessary, and may cause error when trying to send email
+	to the user in the future.
+
+2.  Sharer's number of passengers cannot be shared to JoinView, thus the ride's
+	number of passengers will not be updated.
+
+-------
+
+2.3
+
+1.  Driver and sharer may pick up rides in the past, and also have access to them.
+
+2.  Rider may post a ride in the past.
+
+3.  The sharer's earliest arrival can be later than latest arrival time.
+
+4.  The 2.2.1 problem fixed.
+
+-------
+
+2.5
+
+1.  The 2.2.2, 2.3.1 problems fixed.
+
+2.  Add new function of rider update infomation to become a driver, but the license
+	plate can be None and max passenger can be 0, which is unreasonable.
+
+3.  A rider can have access to driver's view by using url to directly go to the page.
+
+4.  Driver may update his vehicle info when still having unfinished orders, which is
+	unreasonable. 
+
+-------
+
+2.6
+
+1.	The function of sending emails works well on my own system, but fails on docker.
+
+2.  Many pages need to assert the identification of users, especially the ones only open
+	to drivers.
+
+3.  The 2.5.2 problem fixed.
+
+4.  Sharers can directly joining the rides by using url to turn to those pages, without
+	checking the time and destination.
+
+-------
+
+2.7
+
+1. 	The 2.6.1 problem fixed.

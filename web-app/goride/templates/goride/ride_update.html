@@ -1,0 +1,25 @@
+{% extends "goride/base.html" %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% block content %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+
+
+
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Modify a Ride</legend>
+                {% bootstrap_form form %}
+            </fieldset> 
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock content %}

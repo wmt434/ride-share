@@ -1,0 +1,190 @@
+{% extends "goride/base.html" %}
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+{% block content %}
+  <h2 class="blue"> Here's my current drive:</h2>
+  {% if d_len %}
+  {% else %}
+    <p class="center"> You have no drive orders in progress.</p>
+  {% endif %}
+  {% for ride in drives %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'complete' ride.id %}">Finish? Complete!</a>
+          <small class="text-muted">{{ ride.start_time }}</small>
+        </div>
+        <div class="container">
+          <div class="row">
+            <br />
+            <div class="col-sm">
+              <br />
+              
+              <p class="left"> <i class='fas fa-car' style='font-size:36px'></i>&nbsp{{ ride.destination }}</p>
+              <p class="left"> <i class='fas fa-calendar-check' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|date:"M d Y" }}</p>
+              <p class="left"> <i class='fas fa-clock' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|time:"G:i" }}</p>
+            </div>
+            <div class="col-sm">
+              <br />
+              <ul class="square">
+                <li>Driver:
+                  {% if ride.driver %}
+                    {{ride.driver.username}}
+                  {% else %}
+                    --
+                  {% endif %}
+                </li>
+                <li>Owner: {{ride.owner.username}}</li>
+                <li>Number of owner's party: {{ ride.number_of_owner_party }}</li>
+                <li>Sharer:
+                  {% if ride.sharer %}
+                    {{ride.sharer.username}}
+                  {% else %}
+                    --
+                  {% endif %}
+                </li>
+                <li>Number of sharer's party:
+                  {% if ride.sharer %}
+                    {{ ride.number_of_sharer_party }}
+                  {% else %}
+                    --
+                  {% endif %}
+                </li>
+                <li><b>Status: &nbsp{{ ride.get_status_display }}</b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+  <br/>
+  <h2 class="blue"> Here's my current rides:</h2>
+  {% if r_len %}
+  {% else %}
+    <p class="center"> You have no ride orders in progress.</p>
+  {% endif %}
+  {% for ride in rides %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          {% ifequal ride.status 'o' %}
+            <a class="mr-2" href="{% url 'ride-update' ride.id %}">Modify</a>
+            <a class="mr-2" href="{% url 'ride-delete' ride.id %}">Delete</a>
+          {% else %}
+            <a class="btn disabled" href="{% url 'ride-update' ride.id %}">Modify</a>
+            <a class="btn disabled" href="{% url 'ride-delete' ride.id %}">Delete</a>
+          {% endifequal %}
+            <small class="text-muted">{{ ride.start_time }}</small>
+          </div>
+          <div class="container">
+            <div class="row">
+              <br />
+              <div class="col-sm">
+                <br />
+                
+                <p class="left"> <i class='fas fa-car' style='font-size:36px'></i>&nbsp{{ ride.destination }}</p>
+                <p class="left"> <i class='fas fa-calendar-check' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|date:"M d Y" }}</p>
+                <p class="left"> <i class='fas fa-clock' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|time:"G:i" }}</p>
+              </div>
+              <div class="col-sm">
+                <br />
+                <ul class="square">
+                  <li>Driver:
+                    {% if ride.driver %}
+                      {{ride.driver.username}} 
+                    {% else %}
+                      --
+                    {% endif %}
+                  </li>
+                  <li>License plate:
+                    {% if ride.driver %}
+                   {{ride.driver.license_plate}}
+                    {% else %}
+                      --
+                    {% endif %}
+                  </li>
+                  <li>Number from your party: {{ ride.number_of_owner_party }}</li>
+                  <li>Sharer:
+                    {% if ride.sharer %}
+                      {{ride.sharer.username}}
+                    {% else %}
+                      --
+                    {% endif %}
+                  </li>
+                  <li>Number of sharer's party:
+                    {% if ride.sharer %}
+                      {{ ride.number_of_sharer_party }}
+                    {% else %}
+                      --
+                    {% endif %}
+                  </li>
+                  <li><b>Status: &nbsp{{ ride.get_status_display }}</b></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+    <br/>
+    <h2 class="blue"> Here's my current shares:</h2>
+    {% if s_len %}
+    {% else %}
+      <p class="center"> You have no share orders in progress.</p>
+    {% endif %}
+    {% for ride in shares %}
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            {% ifequal ride.status 'o' %}
+            <a class="mr-2" href="{% url 'share-delete' ride.id %}">Don't want to join?</a>
+            {% else %}
+            <a class="btn disabled" href="{% url 'share-delete' ride.id %}">Don't want to join?</a>
+            {% endifequal %}
+            <small class="text-muted">{{ ride.start_time }}</small>
+          </div>
+          <div class="container">
+            <div class="row">
+              <br />
+              <div class="col-sm">
+                <br />
+                
+                <p class="left"> <i class='fas fa-car' style='font-size:36px'></i>&nbsp{{ ride.destination }}</p>
+                <p class="left"> <i class='fas fa-calendar-check' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|date:"M d Y" }}</p>
+                <p class="left"> <i class='fas fa-clock' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|time:"G:i" }}</p>
+              </div>
+              <div class="col-sm">
+                <br />
+                <ul class="square">
+                <li>Driver:
+                    {% if ride.driver %}
+                      {{ride.driver.username}} 
+                    {% else %}
+                      --
+                    {% endif %}
+                  </li>
+                  <li>License plate:
+                    {% if ride.driver %}
+                   {{ride.driver.license_plate}}
+                    {% else %}
+                      --
+                    {% endif %}
+                  </li>
+                  <li>Owner: {{ride.owner.username}}</li>
+                  <li>Number of owner's party: {{ ride.number_of_owner_party }}</li>
+                  <li>Number from your party:
+                    {% if ride.sharer %}
+                      {{ ride.number_of_sharer_party }}
+                    {% else %}
+                      --
+                    {% endif %}
+                  </li>
+                  <li><b>Status: &nbsp{{ ride.get_status_display }}</b></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  {% endblock content %}

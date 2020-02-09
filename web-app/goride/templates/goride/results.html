@@ -1,0 +1,28 @@
+{% extends "goride/base.html" %}
+{% block content %}
+  {% for ride in rides %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'ride-detail' ride.id %}">See Details</a>
+          <small class="text-muted">{{ ride.start_time }}</small>
+        </div>
+        <div class="container">
+          <div class="row">
+                    <br />
+            <div class="col-sm">
+               <br />
+              <p class="large"> To &nbsp&nbsp{{ ride.destination }}</p>
+            </div>
+            <div class="col-sm">
+               <br />
+              <p class="large"> {{ ride.required_arrival }}</p>
+            </div>
+          </div>
+        </div>
+        <br />
+        <p class="article-content">status:&nbsp{{ ride.get_status_display }}</p>
+      </div>
+    </article>
+  {% endfor %}
+{% endblock content %}

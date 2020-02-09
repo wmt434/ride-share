@@ -1,0 +1,5 @@
+Django>3.0
+psycopg2
+django-crispy-forms
+django-bootstrap-datepicker-plus
+django-bootstrap4

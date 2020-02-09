@@ -1,0 +1,54 @@
+{% extends "goride/base.html" %}
+{% block content %}
+  {% for ride in rides %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'pickup' ride.id %}">Pick Me Up!</a>
+          <small class="text-muted">{{ ride.start_time }}</small>
+        </div>
+        <div class="container">
+          <div class="row">
+            <br />
+            <div class="col-sm">
+              <br />
+              
+              <p class="left"> <i class='fas fa-car' style='font-size:36px'></i>&nbsp{{ ride.destination }}</p>
+              <p class="left"> <i class='fas fa-calendar-check' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|date:"M d Y" }}</p>
+              <p class="left"> <i class='fas fa-clock' style='font-size:36px'></i>&nbsp{{ ride.required_arrival|time:"G:i" }}</p>
+            </div>
+            <div class="col-sm">
+              <br />
+              <ul class="square">
+                <li>Driver:
+                  {% if ride.driver %}
+                    {{ride.driver.username}}
+                  {% else %}
+                    --
+                  {% endif %}
+                </li>
+                <li>Owner: {{ride.owner.username}}</li>
+                <li>Number of owner's party: {{ ride.number_of_owner_party }}</li>
+                <li>Sharer:
+                  {% if ride.sharer %}
+                    {{ride.sharer.username}}
+                  {% else %}
+                    --
+                  {% endif %}
+                </li>
+                <li>Number of sharer's party:
+                  {% if ride.sharer %}
+                    {{ ride.number_of_sharer_party }}
+                  {% else %}
+                    --
+                  {% endif %}
+                </li>
+                <li><b>Status: &nbsp{{ ride.get_status_display }}</b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+{% endblock content %}
